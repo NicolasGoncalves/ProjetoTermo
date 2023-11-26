@@ -16,7 +16,7 @@ public class App2 {
     static final String roxo = "\u001B[1;95m";
 
     public static void main(String[] args) {
-
+    	//Possibilidades da palavra oculta
         String[] words = new String[] { "sagaz", "amago", "negro", "termo", "exito", "mexer", "nobre", "senso", "afeto",
                 "algoz", "etica", "plena", "mutua", "tenue", "fazer", "assim", "vigor", "sutil", "aquem", "porem",
                 "secao", "fosse", "sanar", "poder", "audaz", "ideia", "cerne", "inato", "sobre", "desde", "muito",
@@ -27,12 +27,13 @@ public class App2 {
                 "detem", "ainda", "animo", "apice", "ceder", "ansia", "estar", "digno", "pauta", "assaz", "xibiu",
                 "culto", "mundo", "atroz", "fugaz", "censo", "gleba", "forte", "vicio", "vulgo", "cozer", "valha",
                 "denso", "nenem" };
-        // System.out.println(words.length);
         int qtdTentativas;
-
+        
+        //Introdução
         System.out.println(
                 bold + "-- Jogo do Termo -- \nBem-Vindo!\n" + reset + "O objetivo é descobrir qual é a palavra oculta");
-        // rules
+        
+        // Regras
         do {
             System.out.println(bold + "Regras: \n" + reset
                     + "1.Todas as palavras terão 5 caracteres\n"
@@ -93,6 +94,7 @@ public class App2 {
 
         } while (true);
 
+        //Jogo
         boolean sit;
         boolean rep;
         do {
@@ -113,6 +115,7 @@ public class App2 {
 
             }
 
+            //Perguntar se o usuario quer jogar de novo
             do {
 
                 System.out.println(
@@ -127,7 +130,7 @@ public class App2 {
                 } else if (restart.equals("NAO")) {
                     System.out.println(bold + "Obrigado por jogar" + reset);
                     System.out.println(bold +
-                            "      ▄▀▄     ▄▀▄\n"
+                              "      ▄▀▄     ▄▀▄\n"
                             + "     ▄█░░▀▀▀▀▀░░█▄\n"
                             + " ▄▄  █░░░░░░░░░░░█  ▄▄\n"
                             + "█▄▄█ █░░▀░░┬░░▀░░█ █▄▄█"
@@ -149,39 +152,50 @@ public class App2 {
     public static boolean verificar(String oculta, int qtdTentativas) {
         boolean situacao = true;
         String[] words = new String[qtdTentativas];
-
         for (int i = 0; i < words.length; i++) {
             words[i] = bold + (i + 1) + " - ";
         }
-
+        
+        //Contagem de tentativas
         for (int i = 0; i <= qtdTentativas; i++) {
             if (i == qtdTentativas) {
                 situacao = false;
                 break;
             }
-
-            System.out.println(azul + oculta + reset);
+            
+            //Entrada de dados
             System.out.println(bold + "Informe uma palavra: ");
             System.out.print(roxo);
             words[i] = in.next().toUpperCase();
             System.out.print(reset);
+            
+            //Garante que a palavra que o usuario digitou seja de 5 caracteres
             while (words[i].length() != 5) {
                 System.err.println("Quantidade de caracteres invalida");
                 words[i] = in.next().toUpperCase();
             }
             words[i] = acento(words[i]);
 
+            //Compara a palavra do usuario com a palavra oculta
             if (words[i].equals(oculta)) {
-
+            	//Mostra pro usuario as suas tentativas anteriores
+            	
+            	words[i] = bold + (i + 1) + " - " +verde+ words[i]+reset;
+                for (int j = 0; j < words.length; j++) {
+                    System.out.println(words[j]);
+                }
                 situacao = true;
                 break;
+                
             } else {
                 String[] wor = new String[5];
-
+                
+                //Monta um array com cada letra da palavra do usuario em uma posição diferente
                 for (int j = 0; j < wor.length; j++) {
                     wor[j] = "" + words[i].charAt(j);
                 }
 
+                //Altera a cor dos caracteres de acordo com as regras do jogo
                 for (int c1 = 0; c1 < wor.length; c1++) {
 
                     if (wor[c1].equals("" + oculta.charAt(c1))) {
@@ -198,11 +212,14 @@ public class App2 {
                     }
 
                 }
+                
+                //Mostra pro usuario as suas tentativas anteriores
                 words[i] = bold + (i + 1) + " - ";
+                
                 for (String x : wor) {
                     words[i] = words[i] + x;
                 }
-
+				
                 for (int j = 0; j < words.length; j++) {
                     System.out.println(words[j]);
                 }
@@ -213,7 +230,8 @@ public class App2 {
 
         return situacao;
     }
-
+    
+    //Retira a acentuação de uma palavra
     public static String acento(String word) {
 
         String[] wor = new String[word.length()];
@@ -221,7 +239,6 @@ public class App2 {
         String palavra = "";
 
         for (int i = 0; i < wor.length; i++) {
-            // System.out.println(i);
 
             wor[i] = "" + word.charAt(i);
             wor[i] = wor[i].toUpperCase();
